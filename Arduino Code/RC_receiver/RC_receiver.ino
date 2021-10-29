@@ -1,3 +1,5 @@
+// Muscle sensor receiver
+
 #include <printf.h>
 #include <RF24_config.h>
 #include <SPI.h>

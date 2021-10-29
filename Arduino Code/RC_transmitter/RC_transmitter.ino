@@ -1,5 +1,4 @@
 // Muscle sensor transmitter
-// reads data from the sensor, sends msg
 
 #include <printf.h>
 #include <RF24_config.h>
@@ -13,7 +12,8 @@ const byte address[6] = "00001";
 int button_pin = 3;
 boolean button_state = 0;
 const char text[] = " :D ";
-int fuck = 0;
+int readData = 0;
+int threshold = 600;
 
 void setup() {
   Serial.begin(9600);
@@ -25,9 +25,9 @@ void setup() {
 }
 
 void loop() {
-  fuck = analogRead(A0);
-  Serial.println(fuck);
-  if(fuck > 600)
+  readData = analogRead(A0);
+  Serial.println(readData);
+  if(readData > threshold)
   {
     button_state = HIGH;
     Serial.println("Analog is HIGH");
@@ -44,7 +44,7 @@ void loop() {
 
   if (button_state == HIGH) {
     //radio.write(&text, sizeof(text));
-    Serial.println("sending..." + fuck);
+    //Serial.println("sending..." + fuck);
     delay(5);
   }
   else {
