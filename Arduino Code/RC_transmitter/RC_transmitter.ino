@@ -1,5 +1,16 @@
 // Muscle sensor transmitter
 
+// #include "SparkFunLSM6DS3.h" for gyroscope
+// LSM6DS3 myIMU; //Default constructor is I2C, addr 0x6B
+// myIMU.begin();
+// Serial.print("\nGyroscope:\n");
+// Serial.print(" X = ");
+// Serial.println(myIMU.readFloatGyroX(), 4);
+// Serial.print(" Y = ");
+// Serial.println(myIMU.readFloatGyroY(), 4);
+// Serial.print(" Z = ");
+// Serial.println(myIMU.readFloatGyroZ(), 4);
+
 #include <printf.h>
 #include <RF24_config.h>
 #include <SPI.h>
