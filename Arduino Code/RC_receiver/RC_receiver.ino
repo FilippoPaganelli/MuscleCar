@@ -1,5 +1,3 @@
-// Muscle sensor receiver
-
 #include <printf.h>
 #include <RF24_config.h>
 #include <SPI.h>
@@ -8,7 +6,8 @@
 
 RF24 radio(6, 7); // CE, CSN
 
-const int pwm = 2 ;  //initializing pin 2 as pwm
+const int ENpwm1 = 3 ;  //initializing pin 2 as pwm
+const int ENpwm2 = 5 ;
 const int in_1 = 8 ;
 const int in_2 = 9 ;
 const int in_3 = 10;
@@ -19,11 +18,15 @@ const int in_4 = 4;
 
 const byte address[6] = "00001";
 boolean button_state = 0;
+float speedValue = 0;
+float rotationValue = 0;
+int finalSpeed =0;
 
 void setup() {
   Serial.begin(9600);
 
-  pinMode(pwm, OUTPUT) ;  //we have to set PWM pin as output
+  pinMode(ENpwm1, OUTPUT) ;  //we have to set PWM pin as output
+  pinMode(ENpwm2, OUTPUT);
   pinMode(in_1, OUTPUT) ; //Logic pins are also set as output
   pinMode(in_2, OUTPUT) ;
   pinMode(in_3, OUTPUT) ;
@@ -37,15 +40,18 @@ void setup() {
 
 void loop() {
   if (radio.available()) {
-    Serial.println("Radio available");
+    //Serial.println("Radio available");
 
     char text[5] = "";
-    radio.read(&button_state, sizeof(button_state));    //Reading the data
-    if (button_state == HIGH)
+    radio.read(&speedValue, sizeof(speedValue));    //Reading the speed multiplier
+    //radio.read(&rotationValue, sizeof(rotationValue));    //Reading the rotation multiplier
+
+    finalSpeed = (int) (speedValue);    // final speed value
+    Serial.println(finalSpeed);
+
+    Drive();
+    /*if (finalSpeed > 400)
     {
-      delay(50);
-      radio.read(&text, sizeof(text));
-      Serial.println(text);
       Drive();
       Serial.println("Drive");
     }
@@ -53,7 +59,7 @@ void loop() {
     {
       Brake();
       Serial.println("Brake");
-    }
+    }*/
   }
 }
 
@@ -64,7 +70,8 @@ void Drive()
   digitalWrite(in_2, LOW) ;
   digitalWrite(in_3, HIGH);
   digitalWrite(in_4, LOW);
-  analogWrite(pwm, 100) ;
+  analogWrite(ENpwm1, finalSpeed) ;
+  analogWrite(ENpwm2, finalSpeed) ;
 }
 
 void Brake() {
