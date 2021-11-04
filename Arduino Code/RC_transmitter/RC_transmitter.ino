@@ -31,7 +31,7 @@ boolean button_state = 0;
 //int threshold = 600;
 
 ////float rotationValue = 0;
-int speedValue = 0;
+float speedValue = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -46,7 +46,10 @@ void setup() {
 void loop() {
   //readData = analogRead(A0);
 
-  speedValue = analogRead(A0);
+  speedValue = analogRead(A0)/ 1024.0;
+  speedValue = speedValue*255;
+  
+  Serial.println(speedValue);
   ////rotation = myIMU.readFloatGyroX() / 180.0;
   
   //Serial.println(readData);
