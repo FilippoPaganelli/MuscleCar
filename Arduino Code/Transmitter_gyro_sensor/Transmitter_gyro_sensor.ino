@@ -37,6 +37,8 @@ LSM9DS0 dof(MODE_I2C, LSM9DS0_G, LSM9DS0_XM);
 //#define PRINT_RAW
 
 #define PRINT_SPEED 500 // 500 ms between prints
+
+float x_value = 0;
 /***************************** end gyroscope stuff *****************************/
 
 
@@ -64,7 +66,7 @@ void setup() {
 
   // maybe we have to use only 1 Serial.begin()
   /* gyroscope */
-  Serial.begin(115200); // Start serial at 115200 bps
+  //Serial.begin(115200); // Start serial at 115200 bps
   uint16_t status = dof.begin();
   Serial.println(status, HEX);
   Serial.println("Should be 0x49D4");
@@ -110,7 +112,7 @@ void loop() {
   //printOrientation(dof.calcAccel(dof.ax), dof.calcAccel(dof.ay), dof.calcAccel(dof.az));
   Serial.println();
   
-  delay(PRINT_SPEED);
+  //delay(PRINT_SPEED);
   /* end gyroscope stuff */
 }
 
@@ -124,12 +126,15 @@ void printGyro()
   // Either print them as raw ADC values, or calculated in DPS.
   Serial.print("G: ");
 #ifdef PRINT_CALCULATED
-
-  Serial.print(dof.calcGyro(dof.gx), 2);
-  Serial.print(", ");
+  // on wrist with pins facing the skin:
+  // positive value = turn right
+  // negative value = turn left
+  x_value = dof.calcGyro(dof.gx); 
+  Serial.println(x_value, 2);
+  /*Serial.print(", ");
   Serial.print(dof.calcGyro(dof.gy), 2);
   Serial.print(", ");
-  Serial.println(dof.calcGyro(dof.gz), 2);
+  Serial.println(dof.calcGyro(dof.gz), 2);*/
 #elif defined PRINT_RAW
   Serial.print(dof.gx);
   Serial.print(", ");

@@ -16,6 +16,8 @@ LSM9DS0 dof(MODE_I2C, LSM9DS0_G, LSM9DS0_XM);
 
 #define PRINT_SPEED 500 // 500 ms between prints
 
+float x_value = 0;
+
 void setup()
 {
   Serial.begin(115200); // Start serial at 115200 bps
@@ -51,13 +53,18 @@ void printGyro()
   Serial.print("G: ");
 #ifdef PRINT_CALCULATED
 
-  Serial.print(dof.calcGyro(dof.gx), 2);
-  Serial.print(", ");
+  // on wrist with pins facing the skin:
+  // positive value = turn right
+  // negative value = turn left
+  x_value = dof.calcGyro(dof.gx); 
+  Serial.println(x_value, 2);
+  /*Serial.print(", ");
   Serial.print(dof.calcGyro(dof.gy), 2);
   Serial.print(", ");
-  Serial.println(dof.calcGyro(dof.gz), 2);
+  Serial.println(dof.calcGyro(dof.gz), 2);*/
 #elif defined PRINT_RAW
-  Serial.print(dof.gx);
+  x_value = dof.gx;
+  Serial.print(x_value);
   Serial.print(", ");
   Serial.print(dof.gy);
   Serial.print(", ");
