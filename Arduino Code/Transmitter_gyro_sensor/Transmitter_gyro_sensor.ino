@@ -54,6 +54,7 @@ boolean button_state = 0;
 
 ////float rotationValue = 0;
 float speedValue = 0;
+String msgToSend = "";
 
 void setup() {
   Serial.begin(9600);
@@ -77,10 +78,11 @@ void setup() {
 void loop() {
   //readData = analogRead(A0);
 
-  speedValue = analogRead(A0)/ 1024.0;
-  speedValue = speedValue*255;
-  
-  Serial.println(speedValue);
+  muscleSensor();
+  gyroscope();
+
+  sendMsg();
+
   ////rotation = myIMU.readFloatGyroX() / 180.0;
   
   //Serial.println(readData);
@@ -97,13 +99,14 @@ void loop() {
   
   //radio.write(&button_state, sizeof(button_state));
   
-  radio.write(&speedValue, sizeof(speedValue));
+  
   ////radio,write(&rotationValue, sizeof(rotationValue));
   
   delay(55);
 
   /* gyroscope stuff */
-  printGyro();  // Print "G: gx, gy, gz"
+  
+  //printGyro();  // Print "G: gx, gy, gz"
   //printAccel(); // Print "A: ax, ay, az"
   //printMag();   // Print "M: mx, my, mz"
   
@@ -116,7 +119,31 @@ void loop() {
   /* end gyroscope stuff */
 }
 
-void printGyro()
+void sendMsg()
+{
+  msgToSend = String(speedValue,2) + ";" + String(x_value,2);
+  Serial.println("MSG: " + msgToSend);
+  radio.write(&msgToSend, sizeof(msgToSend));
+}
+
+void muscleSensor()
+{
+  speedValue = analogRead(A0)/ 1024.0;
+  speedValue = speedValue*255;
+  Serial.print("Speed value: ");
+  Serial.println(speedValue);  
+}
+
+void gyroscope()
+{
+  dof.readGyro();
+  x_value = dof.calcGyro(dof.gx);
+  Serial.print("G: ");
+  Serial.println(x_value, 2);
+}
+
+
+/*void printGyro()
 {
   // first call readGyro() function. When this exits, it'll update the
   // gx, gy, and gz variables with the most current data.
@@ -131,10 +158,10 @@ void printGyro()
   // negative value = turn left
   x_value = dof.calcGyro(dof.gx); 
   Serial.println(x_value, 2);
-  /*Serial.print(", ");
-  Serial.print(dof.calcGyro(dof.gy), 2);
-  Serial.print(", ");
-  Serial.println(dof.calcGyro(dof.gz), 2);*/
+  //Serial.print(", ");
+  //Serial.print(dof.calcGyro(dof.gy), 2);
+  //Serial.print(", ");
+  //Serial.println(dof.calcGyro(dof.gz), 2);
 #elif defined PRINT_RAW
   Serial.print(dof.gx);
   Serial.print(", ");
@@ -142,4 +169,4 @@ void printGyro()
   Serial.print(", ");
   Serial.println(dof.gz);
 #endif
-}
+}*/
