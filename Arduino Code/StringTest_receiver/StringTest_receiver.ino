@@ -21,7 +21,8 @@ boolean button_state = 0;
 float speedValue = 0;
 float rotationValue = 0;
 int finalSpeed =0;
-String msg = "";
+char charMsg[15] = "";
+String stringMsg = "";
 
 void setup() {
   Serial.begin(9600);
@@ -41,16 +42,24 @@ void setup() {
 
 void loop() {
   if (radio.available()) {
-    //Serial.println("Radio available");
-
-    char text[5] = "";
+    
     //radio.read(&speedValue, sizeof(speedValue));    //Reading the speed multiplier
-    radio.read(&msg, sizeof(msg));    //Reading the whole msg
+    radio.read(&charMsg, sizeof(charMsg));    //Reading the whole msg
     //radio.read(&rotationValue, sizeof(rotationValue));    //Reading the rotation multiplier
 
     //finalSpeed = (int) (speedValue);    // final speed value
     //Serial.println(finalSpeed);
-    Serial.println(msg);
+    Serial.println(charMsg);
+
+    stringMsg = String(charMsg);
+
+    char* temp = strtok(charMsg, ";");
+    speedValue = atof(temp);
+    temp = strtok(NULL, ";");
+    finalSpeed = (int) (round(speedValue));    // final speed values
+    rotationValue = atof(temp);
+    Serial.print("speed is: ");Serial.println(finalSpeed);
+    Serial.print("rotation is: ");Serial.println(rotationValue);
 
     Drive();
     /*if (finalSpeed > 400)
