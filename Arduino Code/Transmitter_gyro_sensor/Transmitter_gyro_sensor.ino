@@ -122,8 +122,11 @@ void loop() {
 void sendMsg()
 {
   msgToSend = String(speedValue,2) + ";" + String(x_value,2);
-  Serial.println("MSG: " + msgToSend);
-  radio.write(&msgToSend, sizeof(msgToSend));
+  char msg[15] = "";
+  msgToSend.toCharArray(msg, sizeof(msg));
+  Serial.print("MSG: ");
+  Serial.println(msg);
+  radio.write(&msg, sizeof(msg));
 }
 
 void muscleSensor()
