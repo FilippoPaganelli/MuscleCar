@@ -139,6 +139,10 @@ void muscleSensor()
 
 void gyroscope()
 {
+  
+  // on wrist with pins facing the skin, yellow wire on top:
+  // positive value = turn right
+  // negative value = turn left
   dof.readGyro();
   x_value = dof.calcGyro(dof.gx);
   Serial.print("G: ");
@@ -156,7 +160,7 @@ void gyroscope()
   // Either print them as raw ADC values, or calculated in DPS.
   Serial.print("G: ");
 #ifdef PRINT_CALCULATED
-  // on wrist with pins facing the skin:
+  // on wrist with pins facing the skin, yellow wire on top:
   // positive value = turn right
   // negative value = turn left
   x_value = dof.calcGyro(dof.gx); 

@@ -23,6 +23,7 @@ float rotationValue = 0;
 int finalSpeed =0;
 char charMsg[15] = "";
 String stringMsg = "";
+int rotationThreshold = 20;
 
 void setup() {
   Serial.begin(9600);
@@ -82,8 +83,20 @@ void Drive()
   digitalWrite(in_2, LOW) ;
   digitalWrite(in_3, HIGH);
   digitalWrite(in_4, LOW);
-  analogWrite(ENpwm1, finalSpeed) ;
-  analogWrite(ENpwm2, finalSpeed) ;
+  if (abs(rotationValue) > rotationThreshold)
+  {
+    if (rotationValue > 0) // turn right --> slow down right wheel
+    {
+      analogWrite(ENpwm1, finalSpeed) ; // left wheel
+      analogWrite(ENpwm2, finalSpeed-rotationValue) ; // right wheel
+    }
+    else // turn left --> slow down left wheel
+    {
+      analogWrite(ENpwm1, finalSpeed+rotationValue) ; // left wheel
+      analogWrite(ENpwm2, finalSpeed) ; // right wheel
+    }
+  }
+  
 }
 
 void Brake() {
