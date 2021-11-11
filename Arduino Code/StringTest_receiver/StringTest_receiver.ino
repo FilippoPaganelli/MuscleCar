@@ -96,7 +96,11 @@ void Drive()
       analogWrite(ENpwm2, finalSpeed) ; // right wheel
     }
   }
-  
+  else
+  {
+    analogWrite(ENpwm1, finalSpeed) ; // left wheel
+    analogWrite(ENpwm2, finalSpeed) ; // right wheel
+  }
 }
 
 void Brake() {
