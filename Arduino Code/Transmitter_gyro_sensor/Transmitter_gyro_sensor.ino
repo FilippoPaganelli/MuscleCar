@@ -128,8 +128,8 @@ void sendMsg()
   msgToSend = String(speedValue,2) + ";" + String(x_value,2);
   char msg[15] = "";
   msgToSend.toCharArray(msg, sizeof(msg));
-  //Serial.print("MSG: ");
-  //Serial.println(msg);
+  Serial.print("MSG: ");
+  Serial.println(msg);
   radio.write(&msg, sizeof(msg));
 }
 
@@ -137,8 +137,8 @@ void muscleSensor()
 {
   speedValue = analogRead(A0)/ 1024.0;
   speedValue = speedValue*255;
-  //Serial.print("Speed value: ");
-  //Serial.println(speedValue);  
+  Serial.print("Speed value: ");
+  Serial.println(speedValue);  
 }
 
 void gyroscope()
@@ -161,10 +161,6 @@ void gyroscope()
     {
       x_value = temp_value;
       lastTime = millis();
-    }
-    else
-    {
-      Serial.print("else");
     }
   }
   
