@@ -55,6 +55,8 @@ boolean button_state = 0;
 ////float rotationValue = 0;
 float speedValue = 0;
 String msgToSend = "";
+long lastTime = 0;
+long interval = 2000;
 
 void setup() {
   Serial.begin(9600);
@@ -79,7 +81,9 @@ void loop() {
   //readData = analogRead(A0);
 
   muscleSensor();
-  gyroscope();
+  gyroscope();  
+  
+  
 
   sendMsg();
 
@@ -124,8 +128,8 @@ void sendMsg()
   msgToSend = String(speedValue,2) + ";" + String(x_value,2);
   char msg[15] = "";
   msgToSend.toCharArray(msg, sizeof(msg));
-  Serial.print("MSG: ");
-  Serial.println(msg);
+  //Serial.print("MSG: ");
+  //Serial.println(msg);
   radio.write(&msg, sizeof(msg));
 }
 
@@ -133,8 +137,8 @@ void muscleSensor()
 {
   speedValue = analogRead(A0)/ 1024.0;
   speedValue = speedValue*255;
-  Serial.print("Speed value: ");
-  Serial.println(speedValue);  
+  //Serial.print("Speed value: ");
+  //Serial.println(speedValue);  
 }
 
 void gyroscope()
@@ -143,8 +147,28 @@ void gyroscope()
   // on wrist with pins facing the skin, yellow wire on top:
   // positive value = turn right
   // negative value = turn left
+  
   dof.readGyro();
-  x_value = dof.calcGyro(dof.gx);
+  int temp_value = dof.calcGyro(dof.gx);
+  if (abs(temp_value) > 100)
+  {
+    x_value = temp_value;
+    lastTime = millis();
+  }
+  else
+  {
+    if (millis() - lastTime > interval)
+    {
+      x_value = temp_value;
+      lastTime = millis();
+    }
+    else
+    {
+      Serial.print("else");
+    }
+  }
+  
+  
   Serial.print("G: ");
   Serial.println(x_value, 2);
 }
