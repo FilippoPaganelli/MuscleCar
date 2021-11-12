@@ -140,7 +140,7 @@ void muscleSensor()
 {
   //speedValue = analogRead(A0)/ 1024.0;
   //speedValue = speedValue*255;
-  speedValue = 120.;
+  speedValue = 220.;
   Serial.print("Speed value: ");
   Serial.println(speedValue);  
 }
@@ -185,7 +185,7 @@ void gyroscopeTest()
   float temp_value = dof.calcGyro(dof.gx);
   if (abs(temp_value) > 20)
   {
-    overall = overall + temp_value/3;
+    overall = overall + temp_value/2;
   }
   
   x_value = overall;
