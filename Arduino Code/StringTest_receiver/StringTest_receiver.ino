@@ -81,18 +81,28 @@ void Drive()
   //For Clock wise motion , in_1 = High , in_2 = Low
   digitalWrite(in_1, HIGH) ;
   digitalWrite(in_2, LOW) ;
-  digitalWrite(in_3, HIGH);
+  digitalWrite(in_3, LOW);
   digitalWrite(in_4, LOW);
+  int rightWheel;
+  int leftWheel;
   if (abs(rotationValue) > rotationThreshold)
   {
     if (rotationValue > 0) // turn right --> slow down right wheel
     {
+      rightWheel = finalSpeed-rotationValue;
+      if (rightWheel < 0){
+        rightWheel = 0;
+      }
       analogWrite(ENpwm1, finalSpeed) ; // left wheel
-      analogWrite(ENpwm2, finalSpeed-rotationValue) ; // right wheel
+      analogWrite(ENpwm2, rightWheel) ; // right wheel
     }
     else // turn left --> slow down left wheel
     {
-      analogWrite(ENpwm1, finalSpeed+rotationValue) ; // left wheel
+      leftWheel = finalSpeed+rotationValue;
+      if (leftWheel < 0){
+        leftWheel = 0;
+      }
+      analogWrite(ENpwm1, leftWheel) ; // left wheel
       analogWrite(ENpwm2, finalSpeed) ; // right wheel
     }
   }
