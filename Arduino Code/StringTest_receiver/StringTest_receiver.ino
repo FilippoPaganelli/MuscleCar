@@ -6,7 +6,7 @@
 
 RF24 radio(6, 7); // CE, CSN
 
-const int ENpwm1 = 3 ;  //initializing pin 2 as pwm
+const int ENpwm1 = 3 ;
 const int ENpwm2 = 5 ;
 const int in_1 = 8 ;
 const int in_2 = 9 ;
@@ -28,7 +28,7 @@ int rotationThreshold = 20;
 void setup() {
   Serial.begin(9600);
 
-  pinMode(ENpwm1, OUTPUT) ;  //we have to set PWM pin as output
+  pinMode(ENpwm1, OUTPUT) ;  //we have to set PWM pins as output
   pinMode(ENpwm2, OUTPUT);
   pinMode(in_1, OUTPUT) ; //Logic pins are also set as output
   pinMode(in_2, OUTPUT) ;
@@ -50,7 +50,7 @@ void loop() {
 
     //finalSpeed = (int) (speedValue);    // final speed value
     //Serial.println(finalSpeed);
-    Serial.println(charMsg);
+    //Serial.println(charMsg);
 
     stringMsg = String(charMsg);
 
@@ -59,8 +59,8 @@ void loop() {
     temp = strtok(NULL, ";");
     finalSpeed = (int) (round(speedValue));    // final speed values
     rotationValue = atof(temp);
-    Serial.print("speed is: ");Serial.println(finalSpeed);
-    Serial.print("rotation is: ");Serial.println(rotationValue);
+    //Serial.print("speed is: ");Serial.println(finalSpeed);
+    //Serial.print("rotation is: ");Serial.println(rotationValue);
 
     Drive();
     /*if (finalSpeed > 400)
@@ -93,6 +93,8 @@ void Drive()
       if (rightWheel < 0){
         rightWheel = 0;
       }
+      Serial.println("RIGHT:");
+      Serial.print(finalSpeed);Serial.print(" - ");Serial.println(rightWheel);
       analogWrite(ENpwm1, finalSpeed) ; // left wheel
       analogWrite(ENpwm2, rightWheel) ; // right wheel
     }
@@ -102,6 +104,8 @@ void Drive()
       if (leftWheel < 0){
         leftWheel = 0;
       }
+      Serial.println("LEFT:");
+      Serial.print(finalSpeed);Serial.print(" - ");Serial.println(leftWheel);
       analogWrite(ENpwm1, leftWheel) ; // left wheel
       analogWrite(ENpwm2, finalSpeed) ; // right wheel
     }
