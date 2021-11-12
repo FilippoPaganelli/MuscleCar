@@ -24,6 +24,8 @@ int finalSpeed =0;
 char charMsg[15] = "";
 String stringMsg = "";
 int rotationThreshold = 20;
+int rightWheel = 0;
+int leftWheel = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -82,39 +84,30 @@ void Drive()
   digitalWrite(in_1, HIGH) ;
   digitalWrite(in_2, LOW) ;
   digitalWrite(in_3, LOW);
-  digitalWrite(in_4, LOW);
-  int rightWheel;
-  int leftWheel;
+  digitalWrite(in_4, HIGH);
+
+  leftWheel = finalSpeed;
+  rightWheel = finalSpeed;
   if (abs(rotationValue) > rotationThreshold)
   {
     if (rotationValue > 0) // turn right --> slow down right wheel
     {
-      rightWheel = finalSpeed-rotationValue;
+      rightWheel = rightWheel-rotationValue;
       if (rightWheel < 0){
         rightWheel = 0;
       }
-      Serial.println("RIGHT:");
-      Serial.print(finalSpeed);Serial.print(" - ");Serial.println(rightWheel);
-      analogWrite(ENpwm1, finalSpeed) ; // left wheel
-      analogWrite(ENpwm2, rightWheel) ; // right wheel
     }
     else // turn left --> slow down left wheel
     {
-      leftWheel = finalSpeed+rotationValue;
+      leftWheel = leftWheel+rotationValue;
       if (leftWheel < 0){
         leftWheel = 0;
       }
-      Serial.println("LEFT:");
-      Serial.print(finalSpeed);Serial.print(" - ");Serial.println(leftWheel);
-      analogWrite(ENpwm1, leftWheel) ; // left wheel
-      analogWrite(ENpwm2, finalSpeed) ; // right wheel
     }
   }
-  else
-  {
-    analogWrite(ENpwm1, finalSpeed) ; // left wheel
-    analogWrite(ENpwm2, finalSpeed) ; // right wheel
-  }
+  analogWrite(ENpwm1, leftWheel) ; // left wheel
+  analogWrite(ENpwm2, rightWheel) ; // right wheel
+  Serial.print(leftWheel); Serial.print(" - "); Serial.println(rightWheel);
 }
 
 void Brake() {
