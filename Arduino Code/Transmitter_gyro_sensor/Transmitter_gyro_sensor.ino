@@ -139,7 +139,7 @@ void sendMsg()
 void muscleSensor()
 {
   speedValue = analogRead(A0)/ 1024.0;
-  speedValue = 75+speedValue*255*1.5; //75 is the minimum speed needed to move the car
+  speedValue = 50 + speedValue*255*1.5; //75 is the minimum speed needed to move the car
   //speedValue = 220.;
   Serial.print("Speed value: ");
   Serial.println(speedValue);  
@@ -185,7 +185,7 @@ void gyroscopeTest()
   float temp_value = dof.calcGyro(dof.gx);
   if (abs(temp_value) > 20)
   {
-    overall = overall + temp_value/5;
+    overall = overall + temp_value / 6.5f; // we devide by a float value here to make it steer less, too sensitive
   }
   
   x_value = overall;
