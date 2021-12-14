@@ -139,7 +139,7 @@ void sendMsg()
 void muscleSensor()
 {
   speedValue = analogRead(A0)/ 1024.0;
-  speedValue = 50 + speedValue*255*1.5; //75 is the minimum speed needed to move the car
+  speedValue = 80 + speedValue*255*1.5; // 80 is the minimum speed needed to move the car
   //speedValue = 220.;
   Serial.print("Speed value: ");
   Serial.println(speedValue);  
