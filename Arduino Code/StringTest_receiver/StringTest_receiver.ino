@@ -45,15 +45,7 @@ void setup() {
 
 void loop() {
   if (radio.available()) {
-    
-    //radio.read(&speedValue, sizeof(speedValue));    //Reading the speed multiplier
     radio.read(&charMsg, sizeof(charMsg));    //Reading the whole msg
-    //radio.read(&rotationValue, sizeof(rotationValue));    //Reading the rotation multiplier
-
-    //finalSpeed = (int) (speedValue);    // final speed value
-    //Serial.println(finalSpeed);
-    //Serial.println(charMsg);
-
     stringMsg = String(charMsg);
 
     char* temp = strtok(charMsg, ";");
@@ -61,20 +53,8 @@ void loop() {
     temp = strtok(NULL, ";");
     finalSpeed = (int) (round(speedValue));    // final speed values
     rotationValue = atof(temp);
-    //Serial.print("speed is: ");Serial.println(finalSpeed);
-    //Serial.print("rotation is: ");Serial.println(rotationValue);
 
     Drive();
-    /*if (finalSpeed > 400)
-    {
-      Drive();
-      Serial.println("Drive");
-    }
-    else
-    {
-      Brake();
-      Serial.println("Brake");
-    }*/
   }
 }
 

@@ -67,62 +67,21 @@ void setup() {
   radio.openWritingPipe(address);
   radio.setPALevel(RF24_PA_MIN);
   radio.stopListening();
-  ////myIMU.begin();
 
-  // maybe we have to use only 1 Serial.begin()
-  /* gyroscope */
-  //Serial.begin(115200); // Start serial at 115200 bps
   uint16_t status = dof.begin();
   Serial.println(status, HEX);
   Serial.println("Should be 0x49D4");
   Serial.println();
-  /* end gyroscope */
 }
 
 void loop() {
-  //readData = analogRead(A0);
-
   muscleSensor();
-  //gyroscope();  
-  gyroscopeTest();  
-  
-
+  gyroscope();  
   sendMsg();
-
-  ////rotation = myIMU.readFloatGyroX() / 180.0;
-  
-  //Serial.println(readData);
-  /*if(readData > threshold)
-  {
-    button_state = HIGH;
-    Serial.println("Analog is HIGH");
-  }
-  else
-  {
-    button_state = LOW;
-    Serial.println("Analog is LOW");
-  }*/
-  
-  //radio.write(&button_state, sizeof(button_state));
-  
-  
-  ////radio,write(&rotationValue, sizeof(rotationValue));
   
   delay(55);
-
-  /* gyroscope stuff */
-  
-  //printGyro();  // Print "G: gx, gy, gz"
-  //printAccel(); // Print "A: ax, ay, az"
-  //printMag();   // Print "M: mx, my, mz"
-  
-  // Print the heading and orientation for fun!
-  //printHeading((float) dof.mx, (float) dof.my);
-  //printOrientation(dof.calcAccel(dof.ax), dof.calcAccel(dof.ay), dof.calcAccel(dof.az));
   Serial.println();
   
-  //delay(PRINT_SPEED);
-  /* end gyroscope stuff */
 }
 
 void sendMsg()
@@ -140,11 +99,11 @@ void muscleSensor()
 {
   speedValue = analogRead(A0)/ 1024.0;
   speedValue = 80 + speedValue*255*1.5; // 80 is the minimum speed needed to move the car
-  //speedValue = 220.;
+  //speedValue = 140.;
   Serial.print("Speed value: ");
   Serial.println(speedValue);  
 }
-
+/*
 void gyroscope()
 {
   
@@ -172,9 +131,9 @@ void gyroscope()
   Serial.print("G: ");
   Serial.println(x_value, 2);
 }
+*/
 
-
-void gyroscopeTest()
+void gyroscope()
 {
   
   // on wrist with pins facing the skin, yellow wire on top:
