@@ -45,14 +45,14 @@ void setup() {
 
 void loop() {
   if (radio.available()) {
-    radio.read(&charMsg, sizeof(charMsg));    //Reading the whole msg
+    radio.read(&charMsg, sizeof(charMsg));    //Reading the whole received message
     stringMsg = String(charMsg);
 
     char* temp = strtok(charMsg, ";");
     speedValue = atof(temp);
     temp = strtok(NULL, ";");
-    finalSpeed = (int) (round(speedValue));    // final speed values
-    rotationValue = atof(temp);
+    finalSpeed = (int) (round(speedValue));    // final speed value
+    rotationValue = atof(temp);                // final steering value
 
     Drive();
   }
@@ -87,7 +87,7 @@ void Drive()
   }
   analogWrite(ENpwm1, leftWheel) ; // left wheel
   analogWrite(ENpwm2, rightWheel) ; // right wheel
-  Serial.print(leftWheel); Serial.print(" - "); Serial.println(rightWheel);
+  //Serial.print(leftWheel); Serial.print(" - "); Serial.println(rightWheel);
 }
 
 void Brake() {
