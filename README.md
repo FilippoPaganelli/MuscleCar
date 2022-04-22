@@ -33,4 +33,8 @@ Want to see this prototype working? Check out our [playlist on YouTube](https://
 ### The Purpose
 
 It was simply a course project, but we really enjoyed working on it, so much that me and Paul are now expanding it for his second university project and my Master's thesis.
-However, the original concept did not change. We're trying to provide a tool to make the **forearm/wrist/hand rehabilitation's monitoring** easier, both for the therapist and for the patient. As for the latter, we also want to make the rehab experience less *boring* and a little bit more *rewarding* by allowing the patient to see immediate and long-term progress indicators.
+However, the original concept did not change. We're trying to provide a tool to make the **forearm/wrist/hand rehabilitation's monitoring** easier, both for the therapist and for the patient. As for the latter, we also want to make the rehab experience less *repetitive* and more *rewarding* by allowing the patient to see immediate and long-term progress indicators.
+
+Check out the new project repos:
+- [Mobile app + Arduino code](https://github.com/FilippoPaganelli/RehTracker_mobile-app)
+- [Full-stack webapp](https://github.com/FilippoPaganelli/RehTracker_full-stack-webapp)
