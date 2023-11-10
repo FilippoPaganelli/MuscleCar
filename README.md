@@ -1,6 +1,6 @@
 ## The Muscle-Car Project
 
-This is our repository for the "Social Technology Lab" project, completed for this course in the winter semester (A.Y. 2021/2022), at the University of Southern Denmark, Odense, Denmark.
+This is our repository for the "Social Technology Lab 1" project, completed for this course in the winter semester (A.Y. 2021/2022), at the University of Southern Denmark, Odense, Denmark.
 
 ### The Team
 
